@@ -1,17 +1,10 @@
-import {
-  Button,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import React, { useState } from "react";
+import { FlatList, Platform, Text } from "react-native";
+import React from "react";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useNavigation } from "@react-navigation/native";
 import CustomHeaderButton from "../components/HeaderButton";
-import colors from "../constants/colors";
+import { useSelector } from "react-redux";
+import PlaceItem from "../components/PlacesItem";
 
 const PlaceListScreen = () => {
   const { setOptions, navigate } = useNavigation();
@@ -29,45 +22,27 @@ const PlaceListScreen = () => {
     });
   }, [setOptions]);
 
-  const [title, setTitle] = useState("");
-  const titleChangeHandler = (text) => setTitle(text);
+  const places = useSelector((state) => state.places.places);
 
-  const savePlaceHandler = () => {};
+  const onSelect = (title, placeId) => {
+    navigate("PlaceDetail", {
+      title,
+      placeId,
+    });
+  };
 
   return (
-    <ScrollView>
-      <View style={styles.form}>
-        <Text style={styles.label}>Title</Text>
-        <TextInput
-          style={styles.input}
-          value={title}
-          onChangeText={titleChangeHandler}
+    <FlatList
+      data={places}
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => (
+        <PlaceItem
+          item={itemData.item}
+          onSelect={() => onSelect(itemData.item.title, itemData.item.id)}
         />
-        <Button
-          title="Save Place"
-          color={colors.primary}
-          onPress={savePlaceHandler}
-        />
-      </View>
-    </ScrollView>
+      )}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  form: {
-    margin: 30,
-  },
-  label: {
-    fontSize: 18,
-    marginBottom: 15,
-  },
-  input: {
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
-    marginBottom: 15,
-    paddingVertical: 4,
-    paddingHorizontal: 2,
-  },
-});
 
 export default PlaceListScreen;
