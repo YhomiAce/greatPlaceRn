@@ -33,11 +33,10 @@ const ImageSelector = (props) => {
       return;
     }
     const imageData = await launchCameraAsync({
-      allowsEditing: true,
+      // allowsEditing: true,
       aspect: [16, 9],
       quality: 0.5,
     });
-    console.log(imageData);
     if (!imageData.canceled) {
       setPickedImage(imageData.assets[0].uri);
       props.onImageTaken(imageData.assets[0].uri);

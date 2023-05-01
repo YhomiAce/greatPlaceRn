@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import Colors from '../constants/colors';
+import React from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import Colors from "../constants/colors";
 
-const PlaceItem = ({item, onSelect}) => {
+const PlaceItem = ({ item, onSelect }) => {
   return (
     <TouchableOpacity onPress={onSelect} style={styles.placeItem}>
       <Image style={styles.image} source={{ uri: item.image }} />
@@ -16,36 +16,36 @@ const PlaceItem = ({item, onSelect}) => {
 
 const styles = StyleSheet.create({
   placeItem: {
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
     borderBottomWidth: 1,
     paddingVertical: 15,
     paddingHorizontal: 30,
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: "row",
+    alignItems: "center",
   },
   image: {
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     borderColor: Colors.primary,
-    borderWidth: 1
+    borderWidth: 1,
   },
   infoContainer: {
     marginLeft: 25,
     width: 250,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   title: {
-    color: 'black',
+    color: "black",
     fontSize: 18,
-    marginBottom: 5
+    marginBottom: 5,
   },
   address: {
-    color: '#666',
-    fontSize: 16
-  }
+    color: "#666",
+    fontSize: 16,
+  },
 });
 
 export default PlaceItem;

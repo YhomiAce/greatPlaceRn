@@ -25,7 +25,6 @@ const NewPlaceScreen = () => {
   const onImageTaken = (img) => setImage(img);
 
   const onLocationSelected = (pickedLocation) => setLocation(pickedLocation);
-  console.log(location);
 
   const savePlaceHandler = () => {
     if (!title || !image || !location) {

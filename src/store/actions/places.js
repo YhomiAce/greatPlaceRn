@@ -25,7 +25,6 @@ export const addPlace = (title, image, location) => {
         throw new Error("Something went wrong");
       }
       const address = responseData.results[0].formatted_address;
-      console.log(address);
       const dbResult = await insertPlace(
         title,
         newPath,
@@ -33,7 +32,6 @@ export const addPlace = (title, image, location) => {
         location.lat,
         location.lng
       );
-      console.log(dbResult);
       dispatch({
         type: ADD_PLACE,
         payload: {
