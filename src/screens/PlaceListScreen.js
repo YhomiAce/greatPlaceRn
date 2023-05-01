@@ -1,13 +1,23 @@
-import { FlatList, Platform, Text } from "react-native";
-import React from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useNavigation } from "@react-navigation/native";
 import CustomHeaderButton from "../components/HeaderButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PlaceItem from "../components/PlacesItem";
+import * as placesAction from "../store/actions/places";
+import colors from "../constants/colors";
 
 const PlaceListScreen = () => {
   const { setOptions, navigate } = useNavigation();
+  const dispatch = useDispatch();
   React.useLayoutEffect(() => {
     setOptions({
       headerRight: () => (
@@ -23,6 +33,21 @@ const PlaceListScreen = () => {
   }, [setOptions]);
 
   const places = useSelector((state) => state.places.places);
+  const [loading, setLoading] = useState(false);
+
+  const fetchPlaces = async () => {
+    try {
+      setLoading(true);
+      await dispatch(placesAction.loadPlaces());
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlaces();
+  }, []);
 
   const onSelect = (title, placeId) => {
     navigate("PlaceDetail", {
@@ -30,6 +55,14 @@ const PlaceListScreen = () => {
       placeId,
     });
   };
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator color={colors.primary} size="large" />
+      </View>
+    );
+  }
 
   return (
     <FlatList
@@ -44,5 +77,13 @@ const PlaceListScreen = () => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  center: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 
 export default PlaceListScreen;
