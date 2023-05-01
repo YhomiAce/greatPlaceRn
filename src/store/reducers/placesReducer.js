@@ -12,11 +12,26 @@ export default (state = initialState, action) => {
       return {
         ...state,
         places: payload.map(
-          (place) => new Place(place.id, place.title, place.imageUri)
+          (place) =>
+            new Place(
+              place.id,
+              place.title,
+              place.imageUri,
+              place.address,
+              place.lat,
+              place.lng
+            )
         ),
       };
     case ADD_PLACE:
-      const newPlace = new Place(payload.id, payload.title, payload.image);
+      const newPlace = new Place(
+        payload.id,
+        payload.title,
+        payload.image,
+        payload.address,
+        payload.lat,
+        payload.lng
+      );
       return {
         ...state,
         places: [newPlace, ...state.places],

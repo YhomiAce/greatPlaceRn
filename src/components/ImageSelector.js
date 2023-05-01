@@ -39,19 +39,18 @@ const ImageSelector = (props) => {
     });
     console.log(imageData);
     if (!imageData.canceled) {
-        setPickedImage(imageData.assets[0].uri);
-        props.onImageTaken(imageData.assets[0].uri)        
+      setPickedImage(imageData.assets[0].uri);
+      props.onImageTaken(imageData.assets[0].uri);
     }
-    
-
   };
 
   return (
     <View style={styles.imagePicker}>
       <View style={styles.imagePreview}>
-        <Text>No Image Picked yet</Text>
-        {pickedImage && (
+        {pickedImage ? (
           <Image style={styles.image} source={{ uri: pickedImage }} />
+        ) : (
+          <Text>No Image Picked yet</Text>
         )}
       </View>
       <Button
